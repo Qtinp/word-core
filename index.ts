@@ -12,6 +12,7 @@ const editor = new Editor(dir)
 const cacheObj = editor.getCacheWord()
 const driver = new Driver(cacheObj, dir)
 
+// 导出外部的主动触发函数
 export const initiative = (q:string, playData: { [key: string]: any }) => {driver.initiativeStart(q, playData)}
 
 

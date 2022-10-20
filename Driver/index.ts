@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as api from '../Tools/index'
-
+import { messageReg } from '../Function/regList/index'
 /**
 * 返回一个文件的json对象
 * @param list 词库文件目录（wordConfig/userData/wordList/recycleBin）
@@ -18,7 +18,13 @@ const getjson = (list: string, name: string) => { return api.command.getjson(dir
 */
 const update = (list: string, name: string, file: any) => { return api.command.update(dir, list, name, file) }
 
-
+/**
+ * 生成随机数
+ * @param n 区间a
+ * @param m 区间b
+ * @returns 结果
+ */
+const random = (n: number, m: number) => { return api.command.random(n, m) }
 
 let wordCache: { [key: string]: any }
 
@@ -36,9 +42,14 @@ export default class {
   }
 
   mainStart(q: string, playerData: { [key: string]: any }) {
-    if (wordCache.passive.indexOf(q)) {
+    
+    const arrCache = messageReg()
 
-    }
+    if (wordCache.keys.indexOf(q) === -1) { return }
+    const long = wordCache.passive.length
+
+    const index = random(0, long - 1)
+    
   }  // 开始被动解析
   initiativeStart(q: string, playerData: object) { } // 开始主动解析?????
   start() { } // 执行回答

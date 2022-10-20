@@ -30,6 +30,15 @@ export const command = {
             fs.writeFileSync(path.join(dir, `./word/${list}/${name}.json`), JSON.stringify(file, null, 3))
         } catch (error) {
         }
+    },
+    /**
+     * 生成随机数
+     * @param n 区间a
+     * @param m 区间b
+     * @returns 结果
+     */
+    random: (n: number, m: number): number => {
+        return Math.floor(Math.random() * (m - n + 1) + n)
     }
 }
 

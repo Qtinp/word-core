@@ -1,6 +1,8 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as api from '../Tools/index'
+import axios from 'axios'
+
 let wordDir = ''
 
 /**
@@ -461,15 +463,20 @@ wordObj:any
 
   }// 取消某主动词库
 
+  initiativeAdd () {} // 主动词库添加
+  initiativeRm () {} // 主动词库删除
+
+  upload () {}
+  download () {}
+
   /*
   pack (mid:string, q:string, a:string) {} // 封装(暂时不做)
 
   upload () {} // 上传
   download () {} // 下载
 
-  主动词库编辑
-  主动词库删除
-  查询位置
+
+  // 查询位置
   
   */
 }

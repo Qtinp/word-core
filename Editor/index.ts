@@ -461,11 +461,17 @@ wordObj:any
 
   }// 取消某主动词库
 
+  /*
   pack (mid:string, q:string, a:string) {} // 封装(暂时不做)
-  // 主动词库相关的，还需继续思考
 
   upload () {} // 上传
   download () {} // 下载
+
+  主动词库编辑
+  主动词库删除
+  查询位置
+  
+  */
 }
 
   /*

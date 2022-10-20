@@ -38,7 +38,7 @@ export const driver = {
     fs.readdirSync(path.join('../Function/initiative/')).forEach((value)=>{ require(path.join('../Function/initiative/', value)) })
   }, 
   mainStart: (q: string, playerData: object) => { },  // 开始被动解析
-  initiativeStart: (q: string, playerData: object) => {}, // 开始主动解析?????
+  initiativeStart: (q: string, playerData: object) => {  }, // 开始主动解析?????
   start: () => { }, // 执行回答
 
   readPack: (dbName: string) => { }, // 查看xxx词库背包

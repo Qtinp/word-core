@@ -20,8 +20,9 @@ const update = (list: string, name: string, file: any) => { return api.command.u
 
 
 
-let wordCache:any
-let dir:string
+let wordCache: { [key: string]: any }
+
+let dir: string
 
 export default class {
   /**
@@ -29,18 +30,21 @@ export default class {
    * @param cache 
    * @param dataDir 
    */
-  constructor (cache:object, dataDir:string) {
+  constructor(cache: { [key: string]: any }, dataDir: string) {
     wordCache = cache
     dir = dataDir
   }
 
+  mainStart(q: string, playerData: { [key: string]: any }) {
+    if (wordCache.passive.indexOf(q)) {
 
-  mainStart (q: string, playerData: object)  {}  // 开始被动解析
-  initiativeStart (q: string, playerData: object)  {  } // 开始主动解析?????
-  start ()  { } // 执行回答
+    }
+  }  // 开始被动解析
+  initiativeStart(q: string, playerData: object) { } // 开始主动解析?????
+  start() { } // 执行回答
 
-  readPack (dbName: string)  { } // 查看xxx词库背包
-  readOtherPack ()  { } //查看某人xxx词库背包
+  readPack(dbName: string) { } // 查看xxx词库背包
+  readOtherPack() { } //查看某人xxx词库背包
 
 }
 

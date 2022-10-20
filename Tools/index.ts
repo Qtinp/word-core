@@ -25,7 +25,7 @@ export const command = {
     * @param name 词库文件名
     * @param file 词库json对象
     */
-    update: (dir: string, list: string, name: string, file: any) => {
+    update: (dir: string, list: string, name: string, file: { [key: string]: any }) => {
         try {
             fs.writeFileSync(path.join(dir, `./word/${list}/${name}.json`), JSON.stringify(file, null, 3))
         } catch (error) {
@@ -42,7 +42,7 @@ export const wordCommand = {
     getCacheWord: (dir: string) => {
         const wordListArr = fs.readdirSync(path.join(dir, 'word/wordList'))
         const recycleBinArr = fs.readFileSync(path.join(dir, 'word/recycleBin'))
-        const CacheObj: any = {}
+        const CacheObj: { [key: string]: any } = {}
         CacheObj['recycleBinList'] = recycleBinArr
         CacheObj['keys'] = []
         CacheObj['passive'] = {}
@@ -67,8 +67,7 @@ export const wordCommand = {
                 if (!CacheObj['initiative'][item2]) { CacheObj['initiative'][item2] = [] }
                 CacheObj['initiative'][item2].concat(data['initiative'][item2])
             }
-
-            return CacheObj
         }
+        return CacheObj
     }
 }

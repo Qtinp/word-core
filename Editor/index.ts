@@ -19,7 +19,7 @@ const getjson = (list: string, name: string) => { return api.command.getjson(wor
 * @param name 词库文件名
 * @param file 词库json对象
 */
-const update = (list: string, name: string, file: any) => { return api.command.update(wordDir, list, name, file) }
+const update = (list: string, name: string, file: { [key: string]: any }) => { return api.command.update(wordDir, list, name, file) }
 
 
 

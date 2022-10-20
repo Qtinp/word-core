@@ -12,4 +12,6 @@ const editor = new Editor(dir)
 const cacheObj = editor.getCacheWord()
 const driver = new Driver(cacheObj, dir)
 
+export const initiative = (q:string, playData: { [key: string]: any }) => {driver.initiativeStart(q, playData)}
+
 

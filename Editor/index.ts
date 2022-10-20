@@ -37,7 +37,7 @@ const getPointer = (id:string) => {
 }
 
 export default class {
-wordObj:any
+wordObj:{ [key: string]: any }
 
   /**
    * 新建词库对象
@@ -142,7 +142,6 @@ wordObj:any
    */
   findQuestion (q:string) {
     let out = ''
-    const outArr = []
 
     for (const a of this.wordObj.keys) {
 

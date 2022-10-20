@@ -1,7 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as api from '../Tools/index'
-let dir: string
 
 /**
 * 返回一个文件的json对象
@@ -21,39 +20,39 @@ const update = (list: string, name: string, file: any) => { return api.command.u
 
 
 
-export const driver = {
-  wordCache: {},
-  dir: '',
+let wordCache:any
+let dir:string
 
+export default class {
   /**
    * 配置基础信息
    * @param cache 
-   * @param dir 
+   * @param dataDir 
    */
-  config: (cache:object, dir:string) => {
-    driver.wordCache = cache
-    driver.dir = dir
+  constructor (cache:object, dataDir:string) {
+    wordCache = cache
+    dir = dataDir
+  }
 
-    // 加载额外主动库
-    fs.readdirSync(path.join('../Function/initiative/')).forEach((value)=>{ require(path.join('../Function/initiative/', value)) })
-  }, 
-  mainStart: (q: string, playerData: object) => { },  // 开始被动解析
-  initiativeStart: (q: string, playerData: object) => {  }, // 开始主动解析?????
-  start: () => { }, // 执行回答
 
-  readPack: (dbName: string) => { }, // 查看xxx词库背包
-  readOtherPack: () => { } //查看某人xxx词库背包
+  mainStart (q: string, playerData: object)  {}  // 开始被动解析
+  initiativeStart (q: string, playerData: object)  {  } // 开始主动解析?????
+  start ()  { } // 执行回答
+
+  readPack (dbName: string)  { } // 查看xxx词库背包
+  readOtherPack ()  { } //查看某人xxx词库背包
 
 }
 
 
 /*
-  wordObj = {
-    触发词: [所拥有的词库]
-    keys : [所有的触发词],
-    wordList : [所有的库名称],
-    recycleBinList: [回收站列表]
-  }
+  wordCacheObj = {
+      passive: { 触发词: [所拥有的词库] }
+      keys : [所有的触发词],
+      wordList : [所有的库名称],
+      recycleBinList: [回收站列表],
+      initiative: { 主动触发词:[所拥有的词库] }
+    }
 */
 
 /*

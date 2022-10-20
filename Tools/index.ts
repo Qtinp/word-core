@@ -47,7 +47,7 @@ export const wordCommand = {
         CacheObj['keys'] = []
         CacheObj['passive'] = {}
 
-        for (let a of wordListArr) {
+        for (const a of wordListArr) {
             const name = a.replace('.json', '')
             const data = command.getjson(dir, 'wordList', name)
             const keysArr = Object.keys(data.main)
@@ -56,14 +56,14 @@ export const wordCommand = {
             if (!CacheObj['wordList']) { CacheObj['wordList'] = [] } // 将本词库名放入缓存
             CacheObj['wordList'].push(name)
 
-            for (let item of keysArr) {
+            for (const item of keysArr) {
                 if (!CacheObj['passive'][item]) { CacheObj['passive'][item] = [] }
                 CacheObj['passive'][item].push(name) // 将此触发词所在的词库放入缓存
 
                 if (CacheObj['keys'].indexOf(item) < 0) { CacheObj['keys'].push(item) }
             }
 
-            for (let item2 of initiativeKey) {
+            for (const item2 of initiativeKey) {
                 if (!CacheObj['initiative'][item2]) { CacheObj['initiative'][item2] = [] }
                 CacheObj['initiative'][item2].concat(data['initiative'][item2])
             }

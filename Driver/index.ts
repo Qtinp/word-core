@@ -68,8 +68,8 @@ export default class {
         }
       }
     }
-  }  // 开始被动解析
-  initiativeStart(q: string, playerData: object) { } // 开始主动解析?????
+  }
+  initiativeStart(q: string, playerData: object) {} // 开始主动解析?????
   start(a: string[], playData: any) {
 
   } // 执行回答

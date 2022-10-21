@@ -41,12 +41,24 @@ export default class {
     dir = dataDir
   }
 
-  mainStart(q: string, playerData: { [key: string]: any }) {
+  mainStart(q: string, playerData: any) {
     
     const arrCache = messageReg()
+    while (arrCache.item.test(q)) {
+      for (let a of arrCache.list) {
+        const reg:RegExp = a[0]
+        const txt:string = a[1]
+        const index:string = a[2]
 
- 
-    
+        const cache = q.match(reg)
+        if (cache) {
+          q = q.replace(a[0], txt)
+          playerData[index] = a[1]
+        }
+
+        if (wordCache.passive.indexOf(q) > -1) {this.start(q, playerData)}
+      }
+    }
   }  // 开始被动解析
   initiativeStart(q: string, playerData: object) { } // 开始主动解析?????
   start() { } // 执行回答
@@ -77,4 +89,11 @@ export default class {
     function: { // js代码 }
   }
 */
-// 当有人触发某词库时，将操作指针定位到此词库
+
+/* playData = {
+  mid: ''
+  mname: '',
+  yid: '',
+  yname: ''
+}
+*/

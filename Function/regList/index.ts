@@ -2,7 +2,7 @@ import { regList } from './iirose'
 // import { messageReg } from './qq
 
 export const messageReg = () => {
-    let outRegList: {list:(string | RegExp)[][], item:RegExp} = {
+    let outRegList: {list: [RegExp, string, string][], item:RegExp} = {
         list: [],
         item: RegExp('')
     }
@@ -10,7 +10,7 @@ export const messageReg = () => {
     let item = ''
     regList.forEach(element => {
         
-        outRegList.list.push([element[0], element[1]]) 
+        outRegList.list.push([element[0], element[1], element[2]]) 
         const str = element[0].toString()
         item = item + '|' + str.slice(1, str.length - 1)
     })
@@ -19,3 +19,4 @@ export const messageReg = () => {
     
     return outRegList
 }
+

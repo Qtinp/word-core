@@ -45,10 +45,7 @@ export default class {
     
     const arrCache = messageReg()
 
-    if (wordCache.keys.indexOf(q) === -1) { return }
-    const long = wordCache.passive.length
-
-    const index = random(0, long - 1)
+ 
     
   }  // 开始被动解析
   initiativeStart(q: string, playerData: object) { } // 开始主动解析?????

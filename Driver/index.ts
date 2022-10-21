@@ -41,14 +41,20 @@ export default class {
     dir = dataDir
   }
 
+  /**
+   * 开始被动查找问
+   * @param q 源问
+   * @param playerData 当前玩家数据
+   * @returns 结果
+   */
   mainStart(q: string, playerData: any) {
-    
+
     const arrCache = messageReg()
     while (arrCache.item.test(q)) {
       for (let a of arrCache.list) {
-        const reg:RegExp = a[0]
-        const txt:string = a[1]
-        const index:string = a[2]
+        const reg: RegExp = a[0]
+        const txt: string = a[1]
+        const index: string = a[2]
 
         const cache = q.match(reg)
         if (cache) {
@@ -56,12 +62,17 @@ export default class {
           playerData[index] = a[1]
         }
 
-        if (wordCache.passive.indexOf(q) > -1) {this.start(q, playerData)}
+        if (wordCache.passive.indexOf(q) > -1) {
+          // wordCache.passive[q]是词库的表接下来要去那些表将他们拼接起来
+          return this.start(joint(wordCache.passive[q], q), playerData)
+        }
       }
     }
   }  // 开始被动解析
   initiativeStart(q: string, playerData: object) { } // 开始主动解析?????
-  start() { } // 执行回答
+  start(a: string[], playData: any) {
+
+  } // 执行回答
 
   readPack(dbName: string) { } // 查看xxx词库背包
   readOtherPack() { } //查看某人xxx词库背包
@@ -97,3 +108,12 @@ export default class {
   yname: ''
 }
 */
+
+const joint = (list: string[], q: string) => {
+  let outArr: any[] = []
+  for (let a of list) {
+    const word = getjson('wordList', a)
+    outArr = word[q].concat(outArr)
+  }
+  return outArr
+}// 拼接多个词库的关键词数组

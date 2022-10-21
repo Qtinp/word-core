@@ -19,5 +19,3 @@ export const messageReg = () => {
     
     return outRegList
 }
-
-console.log(messageReg())

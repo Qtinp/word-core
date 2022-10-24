@@ -15,7 +15,6 @@ export const initiative = (q: string, playData: { [key: string]: any }) => { dri
 
 // 加载额外主动库
 fs.readdirSync(path.join('./Function/initiative/')).forEach((value) => {
-    console.log(value)
     require(path.join('./Function/initiative/', value))
 })
 

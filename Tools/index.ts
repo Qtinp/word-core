@@ -51,7 +51,7 @@ export const wordCommand = {
   getCacheWord: (dir: string) => {
     const wordListArr = fs.readdirSync(path.join(dir, 'word/wordList'))
 
-    const recycleBinArr = fs.readFileSync(path.join(dir, 'word/recycleBin'))
+    const recycleBinArr = fs.readdirSync(path.join(dir, 'word/recycleBin'))
 
     const CacheObj: { [key: string]: any } = {}
     CacheObj['recycleBinList'] = recycleBinArr

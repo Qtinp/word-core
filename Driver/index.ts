@@ -79,6 +79,20 @@ export default class {
 
 }
 
+/**
+ * 拼接多个词库的关键词数组
+ * @param list 库表
+ * @param q 处理后的关键词
+ * @returns 结果
+ */
+ const joint = (list: string[], q: string) => {
+  let outArr: any[] = []
+  for (let a of list) {
+    const word = getjson('wordList', a)
+    outArr = word[q].concat(outArr)
+  }
+  return outArr
+}
 
 /*
   wordCacheObj = {
@@ -109,11 +123,3 @@ export default class {
 }
 */
 
-const joint = (list: string[], q: string) => {
-  let outArr: any[] = []
-  for (let a of list) {
-    const word = getjson('wordList', a)
-    outArr = word[q].concat(outArr)
-  }
-  return outArr
-}// 拼接多个词库的关键词数组

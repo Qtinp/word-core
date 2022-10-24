@@ -3,7 +3,7 @@ import Driver from './Driver'
 import fs from 'fs'
 import path from 'path'
 
-const dir = './data'
+const dir = path.join(__dirname, './data')
 const editor = new Editor(dir)
 
 const cacheObj = editor.getCacheWord()
@@ -14,8 +14,8 @@ export const initiative = (q: string, playData: { [key: string]: any }) => { dri
 
 
 // 加载额外主动库
-fs.readdirSync(path.join('./Function/initiative/')).forEach((value) => {
-    require(path.join('./Function/initiative/', value))
+fs.readdirSync(path.join(__dirname, './Function/initiative/')).forEach((value) => {
+    require(path.join(__dirname, './Function/initiative/', value))
 })
 
 editor.add('测试(@)', '成功', 'admin')

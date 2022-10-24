@@ -69,6 +69,7 @@ export default class {
       }
     }
   }
+  
   initiativeStart(q: string, playerData: object) {} // 开始主动解析?????
   start(a: string[], playData: any) {
 

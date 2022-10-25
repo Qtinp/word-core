@@ -48,6 +48,7 @@ export default class {
    * @returns 结果
    */
   mainStart(q: string, playerData: any) {
+    if (wordCache.passive[q]) { return this.start(joint(wordCache.passive[q], q), playerData) } // 无替换的话
 
     const arrCache = messageReg()
     while (arrCache.item.test(q)) {
@@ -62,6 +63,8 @@ export default class {
           playerData[index] = a[1]
         }
 
+        
+
         if (wordCache.passive.indexOf(q) > -1) {
           // wordCache.passive[q]是词库的表接下来要去那些表将他们拼接起来
           return this.start(joint(wordCache.passive[q], q), playerData)
@@ -72,7 +75,7 @@ export default class {
   
   initiativeStart(q: string, playerData: object) {} // 开始主动解析?????
   start(a: string[], playData: any) {
-
+    console.log(a)
   } // 执行回答
 
   readPack(dbName: string) { } // 查看xxx词库背包
@@ -87,12 +90,15 @@ export default class {
  * @returns 结果
  */
  const joint = (list: string[], q: string) => {
+
   let outArr: any[] = []
+
   for (let a of list) {
     const word = getjson('wordList', a)
-    outArr = word[q].concat(outArr)
+    outArr = word.main[q].concat(outArr)
   }
-  return outArr
+
+  return outArr[random(0, outArr.length - 1)]
 }
 
 /*

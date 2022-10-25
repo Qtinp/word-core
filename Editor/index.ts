@@ -121,7 +121,7 @@ wordObj:{ [key: string]: any }
     
     update('wordList', pointer, word)
     this.wordObj = this.getCacheWord()
-    return ' [词库核心] 删除选中的问答成功'
+    return ` [词库核心] 删除【${pointer}】库选中的问答成功`
   }
 
   /**

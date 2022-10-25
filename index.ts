@@ -17,6 +17,3 @@ export const initiative = (q: string, playData: { [key: string]: any }) => { dri
 fs.readdirSync(path.join(__dirname, './Function/initiative/')).forEach((value) => {
     require(path.join(__dirname, './Function/initiative/', value))
 })
-
-
-editor.del('测试(@)', '1', 'admin')

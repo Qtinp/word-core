@@ -73,22 +73,11 @@ wordObj:{ [key: string]: any }
     const word = getjson('wordList', pointer)
     let feedback:string = ''
 
-
-    if (!Object.keys(word.main) && pointer !== '默认') { // 若是第一次创建，则将作者信息加入
-      word['author'] = [id]
-      word['cache'] = pointer
-      word['backpack'] = []
-    }
-
-    if (pointer === '默认') { 
-      if (!word['author']) {
-        word['author'] = []
+    if (!word.main) {
+        word['author'] = [id]
         word['backpack'] = []
-      }
-      if (word['author'].indexOf(id) === -1) {
-        word['cache'] = pointer
-        word['author'].push(id)
-      }
+        word['main'] = {}
+        word['cache'] = (pointer == '默认') ? '默认' : pointer
     }
 
     if (!word.main[q]) { word.main[q] = [] }
@@ -468,7 +457,7 @@ wordObj:{ [key: string]: any }
   upload () {} // 上传
   download () {} // 下载
 
-
+  changCache () {} // 修改词库的存储库
   // 查询位置
   
   */

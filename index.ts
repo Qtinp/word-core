@@ -18,4 +18,5 @@ fs.readdirSync(path.join(__dirname, './Function/initiative/')).forEach((value) =
     require(path.join(__dirname, './Function/initiative/', value))
 })
 
-editor.add('测试(@)', '成功', 'admin')
+
+editor.del('测试(@)', '1', 'admin')

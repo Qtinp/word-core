@@ -61,8 +61,8 @@ export const wordCommand = {
     for (const a of wordListArr) {
       const name = a.replace('.json', '')
       const data = command.getjson(dir, 'wordList', name)
-      const keysArr = Object.keys(data.main)
-      const initiativeKey = Object.keys(data.initiative)
+      const keysArr = (!data.main) ? [] : Object.keys(data.main) 
+      const initiativeKey = (!data.initiative) ? [] : Object.keys(data.initiative)
 
       if (!CacheObj['wordList']) { CacheObj['wordList'] = [] } // 将本词库名放入缓存
       CacheObj['wordList'].push(name)

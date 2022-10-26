@@ -1,7 +1,9 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as api from '../Tools/index'
-import { messageReg } from '../Function/regList/index'
+import { messageReg } from '../Function/Config/regList/index'
+import { interpreter } from './api/index'
+
 /**
 * 返回一个文件的json对象
 * @param list 词库文件目录（wordConfig/userData/wordList/recycleBin）
@@ -73,9 +75,28 @@ export default class {
     }
   }
   
-  initiativeStart(q: string, playerData: object) {} // 开始主动解析?????
-  start(a: string[], playData: any) {
-    console.log(a)
+  /**
+   * 主动词库解析
+   * @param q 主动词库触发词
+   * @param playerData 传入数据
+   * @returns 结果
+   */
+  initiativeStart(q: string, playerData: object) {
+    if (!wordCache.initiative[q]) { return }
+
+    const main = wordCache.initiative[q]
+
+    let outArr = []
+
+    for (let a of main) {
+      outArr.push(this.start(a, playerData))
+    }
+
+    return outArr
+  }
+
+  start(a: string, playData: any) {
+    return interpreter(a, playData).join('')
   } // 执行回答
 
   readPack(dbName: string) { } // 查看xxx词库背包

@@ -2,7 +2,7 @@ import { regList } from './iirose'
 // import { messageReg } from './qq
 
 export const messageReg = () => {
-    let outRegList: {list: [RegExp, string, string][], item:RegExp} = {
+    const outRegList: {list: [RegExp, string, string][], item:RegExp} = {
         list: [],
         item: RegExp('')
     }

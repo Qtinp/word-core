@@ -54,7 +54,7 @@ export default class {
     
     const arrCache = messageReg()
     while (arrCache.item.test(q)) {
-      for (let a of arrCache.list) {
+      for (const a of arrCache.list) {
         const reg: RegExp = a[0]
         const txt: string = a[1]
         const index: string = a[2]
@@ -86,9 +86,9 @@ export default class {
 
     const main = wordCache.initiative[q]
 
-    let outArr = []
+    const outArr = []
     
-    for (let a of main) {
+    for (const a of main) {
       outArr.push(this.start(a, playerData))
     }
 
@@ -114,7 +114,7 @@ export default class {
 
   let outArr: any[] = []
 
-  for (let a of list) {
+  for (const a of list) {
     const word = getjson('wordList', a)
     outArr = word.main[q].concat(outArr)
   }

@@ -51,7 +51,7 @@ export default class {
    */
   mainStart(q: string, playerData: any) {
     if (wordCache.passive[q]) { return this.start(joint(wordCache.passive[q], q), playerData) } // 无替换的话
-
+    
     const arrCache = messageReg()
     while (arrCache.item.test(q)) {
       for (let a of arrCache.list) {
@@ -87,7 +87,7 @@ export default class {
     const main = wordCache.initiative[q]
 
     let outArr = []
-
+    
     for (let a of main) {
       outArr.push(this.start(a, playerData))
     }
@@ -96,7 +96,7 @@ export default class {
   }
 
   start(a: string, playData: any) {
-    return interpreter(a, playData).join('')
+     return interpreter(a, playData).join('')
   } // 执行回答
 
   readPack(dbName: string) { } // 查看xxx词库背包

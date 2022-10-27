@@ -53,10 +53,13 @@ export const wordCommand = {
 
     const recycleBinArr = fs.readdirSync(path.join(dir, 'word/recycleBin'))
 
-    const CacheObj: { [key: string]: any } = {}
-    CacheObj['recycleBinList'] = recycleBinArr
-    CacheObj['keys'] = []
-    CacheObj['passive'] = {}
+    const CacheObj: { [key: string]: any } = {
+      recycleBinList: recycleBinArr,
+      keys: [],
+      passive: {},
+      initiative: {},
+      wordList: []
+    }
 
     for (const a of wordListArr) {
       const name = a.replace('.json', '')
@@ -76,9 +79,20 @@ export const wordCommand = {
 
       for (const item2 of initiativeKey) {
         if (!CacheObj['initiative'][item2]) { CacheObj['initiative'][item2] = [] }
-        CacheObj['initiative'][item2].concat(data['initiative'][item2])
+        CacheObj['initiative'][item2] = CacheObj['initiative'][item2].concat(data['initiative'][item2])
+
       }
     }
     return CacheObj
   }
 }
+
+/*
+  wordCacheObj = {
+      passive: { 触发词: [所拥有的词库] }
+      keys : [所有的触发词],
+      wordList : [所有的库名称],
+      recycleBinList: [回收站列表],
+      initiative: { 主动触发词:[所拥有的词库] }
+    }
+*/

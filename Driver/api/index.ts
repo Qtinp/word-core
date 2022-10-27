@@ -1,7 +1,7 @@
 // 导入函数包
 import { funcPack } from '../../Function/execute/index'
 // 导入配置包
-import { config } from '../../Function/Config/index'
+import { config } from '../../Function/Config/conventional/index'
 // 左边界符号配置
 const leftBoundarySymbol = config.pars.leftBoundarySymbol
 // 右边界符号配置

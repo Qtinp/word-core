@@ -5,5 +5,5 @@ export const config = {
     leftBoundarySymbol: "$",          // 左边界符号配置
     rightBoundarySymbol: "$"          // 右边界符号配置
   },
-  dir: path.join(__dirname, './data') // 词库缓存路径
+  dir: path.join(__dirname, '../../../data') // 词库缓存路径
 }

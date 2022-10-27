@@ -26,7 +26,7 @@ const isMark = (input: string[]) => {
 // 核心递归解析语句
 const pers2 = (inText: string[]): any => {
   const outArr = []
-  let T = inText
+  const T = inText
 
   while (T.length > 0) {
     const a = T.splice(0, 1)[0]
@@ -53,8 +53,8 @@ const pers2 = (inText: string[]): any => {
 
 // 合并同类项
 const makePar = (data: any[]): any => {
-  let inArr = data
-  let outArr = []
+  const inArr = data
+  const outArr = []
   let index = 0
 
   while (inArr.length > 0) {
@@ -110,7 +110,7 @@ const generateResults = (in2: any[]) => {
 
 // 获取结果
 const getResult = (arrIn: string) => {
-  let wordOrigin = arrIn.split('')
+  const wordOrigin = arrIn.split('')
   const Merge = makePar(pers2(wordOrigin))
 
   const result = []

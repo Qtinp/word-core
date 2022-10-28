@@ -1,4 +1,7 @@
-import {initiative} from '../../index'
+import { initiative } from '../../index'
 
-
-initiative('每隔2秒', {})
+/*
+setInterval(() => {
+  console.log(initiative('每隔2秒', {}))
+}, 2000)
+*/

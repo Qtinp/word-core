@@ -410,35 +410,29 @@ wordObj:{ [key: string]: any }
   whenOn (q:string, a:string, id:string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
-    const question = q.match(/\$([\s\S]+)\$/)
-
-    if (!question) { return ' [词库核心] 主动关键词格式错误 ' }
     
     if(!word['initiative']) { word['initiative'] = {} }
-    if (!word['initiative'][question[1]]) { word['initiative'][question[1]] = [] }
+    if (!word['initiative'][q]) { word['initiative'][q] = [] }
 
-    word['initiative'][question[1]].push(a)
+    word['initiative'][q].push(a)
 
     update('wordList', pointer, word)
     this.wordObj = this.getCacheWord()
 
-    return ` [词库核心] 更新成功，当前序号为【${word['initiative'][question[1]].length}】`
+    return ` [词库核心] 更新成功，当前序号为【${word['initiative'][q].length}】`
   }
 
   whenOff (q:string, index:string, id:string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
-    const question = q.match(/\$([\s\S]+)\$/)
-
-    if (!question) { return ' [词库核心] 主动关键词格式错误 ' }
 
     if (index == 'all') {
-      delete word['initiative'][question[1]]
+      delete word['initiative'][q]
 
     } else if (/\d+/.test(index)) {
       const num = Number(index)
-      if (num > word['initiative'][question[1]].length) { return ' [词库核心] 输入的可能不是一个合理的序号哦 '}
-      word['initiative'][question[1]].splice(num - 1, 1)
+      if (num > word['initiative'][q].length) { return ' [词库核心] 输入的可能不是一个合理的序号哦 '}
+      word['initiative'][q].splice(num - 1, 1)
 
     } else {
       return ' [词库核心] 输入的可能不是一个合理的序号哦 '
@@ -447,7 +441,7 @@ wordObj:{ [key: string]: any }
     update('wordList', pointer, word)
     this.wordObj = this.getCacheWord()
 
-    return ` [词库核心] 更新成功，当前序号为【${word['initiative'][question[1]].length}】`
+    return ` [词库核心] 更新成功，当前序号为【${word['initiative'][q].length}】`
 
   }// 取消某主动词库
 

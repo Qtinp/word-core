@@ -178,5 +178,3 @@ const ArrayInterpreter = (needInterpreterArr: any[], playData: any) => {
 
   return inArr
 }
-
-module.exports = { interpreter }

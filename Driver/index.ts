@@ -50,8 +50,8 @@ export default class {
    * @returns 结果
    */
   mainStart(q: string, playerData: any) {
-    if (wordCache.passive[q]) { return this.start(joint(wordCache.passive[q], q), playerData) } // 无替换的话
-    
+    if (wordCache.passive[q]) { return this.Change(joint(wordCache.passive[q], q), playerData) } // 无替换的话
+
     const arrCache = messageReg()
     while (arrCache.item.test(q)) {
       for (const a of arrCache.list) {
@@ -65,16 +65,32 @@ export default class {
           playerData[index] = a[1]
         }
 
-        
+
 
         if (wordCache.passive.indexOf(q) > -1) {
           // wordCache.passive[q]是词库的表接下来要去那些表将他们拼接起来
-          return this.start(joint(wordCache.passive[q], q), playerData)
+          return this.Change(joint(wordCache.passive[q], q), playerData)
         }
       }
     }
   }
-  
+
+  Change(resultArr: any[], playData: any) {
+    //拷贝原数组
+    const inArr = resultArr.slice()
+
+    // 开始解析，若返回值为[Word-Core] next则表示随机重新解析
+    while (inArr.length > 0) {
+      const now = inArr.splice(random(0, resultArr.length - 1), 1)
+      const value = this.start(now[0], playData)
+      if (value !== '[Word-Core] next') {
+        return value
+      }
+    }
+
+    return ''
+  }
+
   /**
    * 主动词库解析
    * @param q 主动词库触发词
@@ -87,7 +103,7 @@ export default class {
     const main = wordCache.initiative[q]
 
     const outArr = []
-    
+
     for (const a of main) {
       outArr.push(this.start(a, playerData))
     }
@@ -96,7 +112,7 @@ export default class {
   }
 
   start(a: string, playData: any) {
-     return interpreter(a, playData).join('')
+    return interpreter(a, playData).join('')
   } // 执行回答
 
   readPack(dbName: string) { } // 查看xxx词库背包
@@ -110,7 +126,7 @@ export default class {
  * @param q 处理后的关键词
  * @returns 结果
  */
- const joint = (list: string[], q: string) => {
+const joint = (list: string[], q: string) => {
 
   let outArr: any[] = []
 
@@ -119,7 +135,7 @@ export default class {
     outArr = word.main[q].concat(outArr)
   }
 
-  return outArr[random(0, outArr.length - 1)]
+  return outArr
 }
 
 /*

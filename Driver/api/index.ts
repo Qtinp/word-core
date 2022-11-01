@@ -149,7 +149,7 @@ export const interpreter = (inData: string, playData: any): any => {
     }
     return outArr
   } catch (err) {
-    return err
+    return `[Word-Driver] ${err}`
   }
 
 }

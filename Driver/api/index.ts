@@ -134,7 +134,7 @@ const getResult = (arrIn: string) => {
 
 
 // 解析出数组
-export const interpreter = (inData: string, playData: any): any => {
+export const interpreter = (inData: string, playData: { [key: string]: string }): any => {
   const inArr = getResult(inData)
   const outArr = []
   try {
@@ -155,7 +155,7 @@ export const interpreter = (inData: string, playData: any): any => {
 }
 
 // 将数组进行递归处理
-const ArrayInterpreter = (needInterpreterArr: any[], playData: any) => {
+const ArrayInterpreter = (needInterpreterArr: any[], playData: { [key: string]: string }) => {
   let inArr: any = needInterpreterArr
 
   for (let i = 0; i < inArr.length; i++) {

@@ -5,6 +5,7 @@ const random = (n: number, m: number) => { return Math.floor(Math.random() * (m 
 export const funcPack:any = {
   '测试': (inData: any, playData: any) => {
     // 当发现有测试语句的时候会触发这个
+    if (inData[1] === '1') { throw 'next'}
     return inData[1]
   }
 }

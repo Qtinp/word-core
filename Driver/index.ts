@@ -78,12 +78,11 @@ export default class {
   Change(resultArr: any[], playData: any) {
     //拷贝原数组
     const inArr = resultArr.slice()
-
-    // 开始解析，若返回值为[Word-Core] next则表示随机重新解析
+    // 开始解析，若返回值为[Word-Driver] next则表示随机重新解析
     while (inArr.length > 0) {
-      const now = inArr.splice(random(0, resultArr.length - 1), 1)
+      const now = inArr.splice(random(0, inArr.length - 1), 1)
       const value = this.start(now[0], playData)
-      if (value !== '[Word-Core] next') {
+      if (value !== '[Word-Driver] next') {
         return value
       }
     }
@@ -112,7 +111,9 @@ export default class {
   }
 
   start(a: string, playData: any) {
-    return interpreter(a, playData).join('')
+    let out = interpreter(a, playData)
+    if (Array.isArray(out)) { out = out.join('') }
+    return out
   } // 执行回答
 
   readPack(dbName: string) { } // 查看xxx词库背包

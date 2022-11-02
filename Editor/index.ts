@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as api from '../Tools/index'
-import axios from 'axios'
+// import axios from 'axios'
 
 let wordDir = ''
 
@@ -19,7 +19,7 @@ const getjson = (list: string, name: string) => { return api.command.getjson(wor
 * @param name 词库文件名
 * @param file 词库json对象
 */
-const update = (list: string, name: string, file: { [key: string]: any }) => { return api.command.update(wordDir, list, name, file) }
+const update = (list: string, name: string, file: object) => { return api.command.update(wordDir, list, name, file) }
 
 
 
@@ -37,7 +37,7 @@ const getPointer = (id:string) => {
 }
 
 export default class {
-wordObj:{ [key: string]: any }
+wordObj
 
   /**
    * 新建词库对象
@@ -422,6 +422,13 @@ wordObj:{ [key: string]: any }
     return ` [词库核心] 更新成功，当前序号为【${word['initiative'][q].length}】`
   }
 
+  /**
+   * 删除主动词库
+   * @param q 主动触发词
+   * @param index 序号
+   * @param id 编辑者id
+   * @returns 结果
+   */
   whenOff (q:string, index:string, id:string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
@@ -443,7 +450,27 @@ wordObj:{ [key: string]: any }
 
     return ` [词库核心] 更新成功，当前序号为【${word['initiative'][q].length}】`
 
-  }// 取消某主动词库
+  }
+
+  /**
+   * 修改词库的存储库
+   * @param newCacheName 新库名
+   * @param id 编辑者id
+   * @returns 结果
+   */
+  changCache (newCacheName:string ,id:string) {
+    const pointer = getPointer(id)
+    const word = getjson('wordList', pointer)
+
+    if (word.author[0] !== id) { return }
+    
+    word.cache = newCacheName
+
+    update('wordList', pointer, word)
+    this.wordObj = this.getCacheWord()
+
+    return ' [词库核心] 修改为新库成功'
+  }
 
   /*
   pack (mid:string, q:string, a:string) {} // 封装(暂时不做)
@@ -451,7 +478,6 @@ wordObj:{ [key: string]: any }
   upload () {} // 上传
   download () {} // 下载
 
-  changCache () {} // 修改词库的存储库
   // 查询位置
   
   */

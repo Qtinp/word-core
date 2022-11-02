@@ -21,8 +21,14 @@ const getjson = (list: string, name: string) => { return api.command.getjson(wor
 */
 const update = (list: string, name: string, file: object) => { return api.command.update(wordDir, list, name, file) }
 
-
-
+// 定义词库缓存变量的类型
+type wordCache = {
+  passive: { [key:string]: string[] }
+  keys : string[],
+  wordList : string[],
+  recycleBinList: string[],
+  initiative: { [key:string]:string[] }
+}
 
 /**
  * 获取词库编辑指针
@@ -37,7 +43,7 @@ const getPointer = (id:string) => {
 }
 
 export default class {
-wordObj
+wordObj: wordCache
 
   /**
    * 新建词库对象

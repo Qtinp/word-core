@@ -18,7 +18,7 @@ const getjson = (list: string, name: string) => { return api.command.getjson(dir
 * @param name 词库文件名
 * @param file 词库json对象
 */
-const update = (list: string, name: string, file: any) => { return api.command.update(dir, list, name, file) }
+const update = (list: string, name: string, file: object) => { return api.command.update(dir, list, name, file) }
 
 /**
  * 生成随机数
@@ -32,13 +32,22 @@ let wordCache: { [key: string]: any }
 
 let dir: string
 
+// 定义词库缓存变量的类型
+type wordCache = {
+  passive: { [key:string]: string[] }
+  keys : string[],
+  wordList : string[],
+  recycleBinList: string[],
+  initiative: { [key:string]:string[] }
+}
+
 export default class {
   /**
    * 配置基础信息
    * @param cache 
    * @param dataDir 
    */
-  constructor(cache: { [key: string]: any }, dataDir: string) {
+  constructor(cache: wordCache, dataDir: string) {
     wordCache = cache
     dir = dataDir
   }
@@ -49,7 +58,7 @@ export default class {
    * @param playerData 当前玩家数据
    * @returns 结果
    */
-  mainStart(q: string, playerData: any) {
+  mainStart(q: string, playerData: {[key: string]: string}) {
     if (wordCache.passive[q]) { return this.Change(joint(wordCache.passive[q], q), playerData) } // 无替换的话
 
     const arrCache = messageReg()
@@ -75,7 +84,7 @@ export default class {
     }
   }
 
-  Change(resultArr: any[], playData: any) {
+  Change(resultArr: string[], playData: {[key: string]: string}) {
     //拷贝原数组
     const inArr = resultArr.slice()
     // 开始解析，若返回值为[Word-Driver] next则表示随机重新解析
@@ -96,7 +105,7 @@ export default class {
    * @param playerData 传入数据
    * @returns 结果
    */
-  initiativeStart(q: string, playerData: object) {
+  initiativeStart(q: string, playerData: {[key: string]: string}) {
     if (!wordCache.initiative[q]) { return }
 
     const main = wordCache.initiative[q]
@@ -110,7 +119,7 @@ export default class {
     return outArr
   }
 
-  start(a: string, playData: any) {
+  start(a: string, playData: {[key: string]: string}) {
     let out = interpreter(a, playData)
     if (Array.isArray(out)) { out = out.join('') }
     return out

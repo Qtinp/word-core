@@ -17,7 +17,7 @@ export const driver = new Driver(cacheObj, dir)
  * @param playData 触发者数据
  * @returns 结果
  */
-export const initiative = (q: string, playData: { [key: string]: any }) => { return driver.initiativeStart(q, playData) }
+export const initiative = (q: string, playData: { [key: string]: string }) => { return driver.initiativeStart(q, playData) }
 
 
 // 加载额外主动库

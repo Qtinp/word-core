@@ -42,6 +42,15 @@ export const command = {
   }
 }
 
+// 定义词库缓存变量的类型
+type wordCache = {
+  passive: { [key:string]: string[] }
+  keys : string[],
+  wordList : string[],
+  recycleBinList: string[],
+  initiative: { [key:string]:string[] }
+}
+
 export const wordCommand = {
   /**
    * 获取全局数据
@@ -53,7 +62,7 @@ export const wordCommand = {
 
     const recycleBinArr = fs.readdirSync(path.join(dir, 'word/recycleBin'))
 
-    const CacheObj: { [key: string]: any } = {
+    const CacheObj: wordCache = {
       recycleBinList: recycleBinArr,
       keys: [],
       passive: {},

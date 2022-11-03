@@ -1,5 +1,3 @@
-import * as fs from 'fs'
-import * as path from 'path'
 import * as api from '../Tools/index'
 let dir:string
 

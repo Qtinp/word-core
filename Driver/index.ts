@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as path from 'path'
+// import * as fs from 'fs'
+// import * as path from 'path'
 import * as api from '../Tools/index'
 import { messageReg } from '../Function/Config/regList/index'
 import { interpreter } from './api/index'
@@ -18,7 +18,7 @@ const getjson = (list: string, name: string) => { return api.command.getjson(dir
 * @param name 词库文件名
 * @param file 词库json对象
 */
-const update = (list: string, name: string, file: object) => { return api.command.update(dir, list, name, file) }
+// const update = (list: string, name: string, file: object) => { return api.command.update(dir, list, name, file) }
 
 /**
  * 生成随机数
@@ -28,10 +28,6 @@ const update = (list: string, name: string, file: object) => { return api.comman
  */
 const random = (n: number, m: number) => { return api.command.random(n, m) }
 
-let wordCache: { [key: string]: any }
-
-let dir: string
-
 // 定义词库缓存变量的类型
 type wordCache = {
   passive: { [key:string]: string[] }
@@ -40,6 +36,10 @@ type wordCache = {
   recycleBinList: string[],
   initiative: { [key:string]:string[] }
 }
+
+let wordCache: wordCache
+
+let dir: string
 
 export default class {
   /**
@@ -74,9 +74,7 @@ export default class {
           playerData[index] = a[1]
         }
 
-
-
-        if (wordCache.passive.indexOf(q) > -1) {
+        if (wordCache.passive[q]) {
           // wordCache.passive[q]是词库的表接下来要去那些表将他们拼接起来
           return this.Change(joint(wordCache.passive[q], q), playerData)
         }
@@ -125,9 +123,10 @@ export default class {
     return out
   } // 执行回答
 
+  /*
   readPack(dbName: string) { } // 查看xxx词库背包
   readOtherPack() { } //查看某人xxx词库背包
-
+  */
 }
 
 /**
@@ -138,7 +137,7 @@ export default class {
  */
 const joint = (list: string[], q: string) => {
 
-  let outArr: any[] = []
+  let outArr: string[] = []
 
   for (const a of list) {
     const word = getjson('wordList', a)

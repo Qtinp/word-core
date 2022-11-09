@@ -1,7 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-
 export const command = {
   /**
   * 返回一个文件的json对象
@@ -44,11 +43,11 @@ export const command = {
 
 // 定义词库缓存变量的类型
 type wordCache = {
-  passive: { [key:string]: string[] }
-  keys : string[],
-  wordList : string[],
+  passive: { [key: string]: string[] }
+  keys: string[],
+  wordList: string[],
   recycleBinList: string[],
-  initiative: { [key:string]:string[] }
+  initiative: { [key: string]: string[] }
 }
 
 export const wordCommand = {
@@ -73,23 +72,22 @@ export const wordCommand = {
     for (const a of wordListArr) {
       const name = a.replace('.json', '')
       const data = command.getjson(dir, 'wordList', name)
-      const keysArr = (!data.main) ? [] : Object.keys(data.main) 
+      const keysArr = (!data.main) ? [] : Object.keys(data.main)
       const initiativeKey = (!data.initiative) ? [] : Object.keys(data.initiative)
 
-      if (!CacheObj['wordList']) { CacheObj['wordList'] = [] } // 将本词库名放入缓存
-      CacheObj['wordList'].push(name)
+      if (!CacheObj.wordList) { CacheObj.wordList = [] } // 将本词库名放入缓存
+      CacheObj.wordList.push(name)
 
       for (const item of keysArr) {
-        if (!CacheObj['passive'][item]) { CacheObj['passive'][item] = [] }
-        CacheObj['passive'][item].push(name) // 将此触发词所在的词库放入缓存
+        if (!CacheObj.passive[item]) { CacheObj.passive[item] = [] }
+        CacheObj.passive[item].push(name) // 将此触发词所在的词库放入缓存
 
-        if (CacheObj['keys'].indexOf(item) < 0) { CacheObj['keys'].push(item) }
+        if (CacheObj.keys.indexOf(item) < 0) { CacheObj.keys.push(item) }
       }
 
       for (const item2 of initiativeKey) {
-        if (!CacheObj['initiative'][item2]) { CacheObj['initiative'][item2] = [] }
-        CacheObj['initiative'][item2] = CacheObj['initiative'][item2].concat(data['initiative'][item2])
-
+        if (!CacheObj.initiative[item2]) { CacheObj.initiative[item2] = [] }
+        CacheObj.initiative[item2] = CacheObj.initiative[item2].concat(data.initiative[item2])
       }
     }
     return CacheObj

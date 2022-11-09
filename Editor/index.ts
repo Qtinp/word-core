@@ -23,11 +23,11 @@ const update = (list: string, name: string, file: object) => { return api.comman
 
 // 定义词库缓存变量的类型
 type wordCache = {
-  passive: { [key:string]: string[] }
-  keys : string[],
-  wordList : string[],
+  passive: { [key: string]: string[] }
+  keys: string[],
+  wordList: string[],
   recycleBinList: string[],
-  initiative: { [key:string]:string[] }
+  initiative: { [key: string]: string[] }
 }
 
 /**
@@ -35,7 +35,7 @@ type wordCache = {
  * @param id 编辑者id
  * @returns 词库名
  */
-const getPointer = (id:string) => {
+const getPointer = (id: string) => {
   const pointer = getjson('wordConfig', 'pointer')
   if (!pointer[id]) { pointer[id] = '默认' }
   update('wordConfig', 'pointer', pointer)
@@ -43,13 +43,13 @@ const getPointer = (id:string) => {
 }
 
 export default class {
-wordObj: wordCache
+  wordObj: wordCache
 
   /**
    * 新建词库对象
    * @param dir 词库数据根文件夹
    */
-  constructor (dir:string) {
+  constructor (dir: string) {
     wordDir = dir
 
     try { fs.mkdirSync(path.join(dir)) } catch (err) { }
@@ -69,29 +69,29 @@ wordObj: wordCache
 
   /**
    * 添加问答
-   * @param q 触发词 
+   * @param q 触发词
    * @param a 回复句
    * @param id 编写者id
    * @returns 结果
    */
-  add (q: string, a: string,id: string) {
+  add (q: string, a: string, id: string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
-    let feedback:string = ''
+    let feedback: string = ''
 
     if (!word.main) {
-        word['author'] = [id]
-        word['backpack'] = []
-        word['main'] = {}
-        word['cache'] = (pointer == '默认') ? '默认' : pointer
+      word.author = [id]
+      word.backpack = []
+      word.main = {}
+      word.cache = (pointer === '默认') ? '默认' : pointer
     }
 
     if (!word.main[q]) { word.main[q] = [] }
     word.main[q].push(a)
 
     feedback = ` [词库核心] 添加成功，保存为【${pointer}】库，序号为【${word.main[q].length}】`
-    if (this.wordObj['passive'][q]) {
-      feedback = feedback + `\n\n此触发词也在以下库存在：\n` + this.wordObj['passive'][q].join('\n')
+    if (this.wordObj.passive[q]) {
+      feedback = feedback + '\n\n此触发词也在以下库存在：\n' + this.wordObj.passive[q].join('\n')
     }
 
     update('wordList', pointer, word)
@@ -106,25 +106,22 @@ wordObj: wordCache
    * @param id 编辑者id
    * @returns 结果
    */
-  del (q:string, index:string, id:string) {
+  del (q: string, index: string, id: string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
 
-    if (!word.main[q]) { return ' [词库核心] 当前词库不存在您要删除的问答'}
+    if (!word.main[q]) { return ' [词库核心] 当前词库不存在您要删除的问答' }
 
     if (index === 'all') {
       delete word.main[q]
-
     } else if (/\d+/.test(index)) {
       if (Number(index) > word.main[q].length) { return ' [词库核心] 您输入的序号不存在' }
       word.main[q].splice(Number(index) - 1, 1)
       if (word.main[q].length <= 0) { delete word.main[q] }
-
     } else {
       return ' [词库核心] 您输入的可能不是一个正确的数值，删除仅能够为<数字 / all>'
-
     }
-    
+
     update('wordList', pointer, word)
     this.wordObj = this.getCacheWord()
     return ` [词库核心] 删除【${pointer}】库选中的问答成功`
@@ -135,26 +132,25 @@ wordObj: wordCache
    * @param q 所寻找的触发词(正则字符串)
    * @returns 结果
    */
-  findQuestion (q:string) {
+  findQuestion (q: string) {
     let out = ''
 
     for (const a of this.wordObj.keys) {
-
-      if (RegExp(q).test(a)) { out = out + `\n触发词 : 【${a}】 存在于  【${this.wordObj['passive'][a].join(',')}】` }
+      if (RegExp(q).test(a)) { out = out + `\n触发词 : 【${a}】 存在于  【${this.wordObj.passive[a].join(',')}】` }
     }
-    
+
     return ` [词库核心] 当前:\n${out}`
   }
 
   /**
    * 寻找词库
-   * @param listName 需要寻找的词库名 
+   * @param listName 需要寻找的词库名
    * @returns 结果
    */
-  findList (listName:string) {
+  findList (listName: string) {
     let out = ''
 
-    for (const a of this.wordObj['wordList']) {
+    for (const a of this.wordObj.wordList) {
       if (RegExp(listName).test(a)) {
         out = out + `${a}\n`
       }
@@ -168,8 +164,8 @@ wordObj: wordCache
    * @param dbName 查询的词库名称
    * @returns 结果
    */
-  passiveList (dbName:string) {
-    if (this.wordObj['wordList'].indexOf(dbName) === -1) { return ' [词库核心] 此词库并不存在！' }
+  passiveList (dbName: string) {
+    if (this.wordObj.wordList.indexOf(dbName) === -1) { return ' [词库核心] 此词库并不存在！' }
 
     const word = getjson('wordList', dbName)
     const keys = Object.keys(word.main)
@@ -188,7 +184,7 @@ wordObj: wordCache
    * @param id 编辑者id
    * @returns 结果
    */
-  changePointer (pointerName:string, id:string) {
+  changePointer (pointerName: string, id: string) {
     const pointer = getjson('wordConfig', 'pointer')
 
     if (!pointer[id]) { pointer[id] = '默认' }
@@ -197,13 +193,13 @@ wordObj: wordCache
     update('wordConfig', 'pointer', pointer)
     return ' [词库核心] 指针已变更'
   }
-  
+
   /**
    * 重置编辑指针
    * @param id 编辑者id
    * @returns 结果
    */
-  resetPointer (id:string) {
+  resetPointer (id: string) {
     const pointer = getjson('wordConfig', 'pointer')
     pointer[id] = '默认'
 
@@ -214,10 +210,10 @@ wordObj: wordCache
   /**
    * 移动词库至回收站
    * @param dbName 词库名
-   * @returns 
+   * @returns
    */
-  killList (dbName:string) {
-    if (this.wordObj['wordList'].indexOf(dbName) === -1) { return ' [词库核心] 此词库不存在' }
+  killList (dbName: string) {
+    if (this.wordObj.wordList.indexOf(dbName) === -1) { return ' [词库核心] 此词库不存在' }
     try {
       fs.renameSync(path.join(wordDir, `word/wordList/${dbName}.json`), path.join(wordDir, `word/recycleBin/${dbName}.json`))
       this.wordObj = this.getCacheWord()
@@ -233,19 +229,17 @@ wordObj: wordCache
    * @returns 返回结果
    */
   clearBackup () {
-    const needClearList = this.wordObj['recycleBinList']
+    const needClearList = this.wordObj.recycleBinList
     try {
       for (const a of needClearList) {
         fs.unlinkSync(path.join(wordDir, `word/wordList/${a}`))
       }
       this.wordObj = this.getCacheWord()
       return ' [词库核心] 回收站清理成功！'
-
     } catch (err) {
       this.wordObj = this.getCacheWord()
       return ' [词库核心] 清空回收站失败'
     }
-    
   }
 
   /**
@@ -253,8 +247,8 @@ wordObj: wordCache
    * @param dbName 词库名
    * @returns 结果
    */
-  recoveryList (dbName:string) {
-    if (this.wordObj['recycleBinList'].indexOf(dbName) === -1) { return ' [词库核心] 回收站不存在此词库' }
+  recoveryList (dbName: string) {
+    if (this.wordObj.recycleBinList.indexOf(dbName) === -1) { return ' [词库核心] 回收站不存在此词库' }
     try {
       fs.renameSync(path.join(wordDir, `word/recycleBin/${dbName}.json`), path.join(wordDir, `word/wordList/${dbName}.json`))
       this.wordObj = this.getCacheWord()
@@ -270,7 +264,7 @@ wordObj: wordCache
    * @returns 结果
    */
   backupList () {
-    const out = this.wordObj['recycleBinList'].join('\n')
+    const out = this.wordObj.recycleBinList.join('\n')
     return ` [词库核心] 当前回收站拥有：\n\n${out}`
   }
 
@@ -279,8 +273,8 @@ wordObj: wordCache
    * @param dbName 词库名
    * @returns 结果
    */
-  mandatoryDelete (dbName:string) {
-    if (this.wordObj['wordList'].indexOf(dbName) === -1) { return ' [词库核心] 此词库不存在' }
+  mandatoryDelete (dbName: string) {
+    if (this.wordObj.wordList.indexOf(dbName) === -1) { return ' [词库核心] 此词库不存在' }
     try {
       fs.unlinkSync(path.join(wordDir, `word/wordList/${dbName}.json`))
       this.wordObj = this.getCacheWord()
@@ -297,16 +291,16 @@ wordObj: wordCache
    * @param mid 我的id
    * @returns 结果
    */
-  addWriter (tid:string, mid:string) {
+  addWriter (tid: string, mid: string) {
     const pointer = getPointer(mid)
     const word = getjson('wordList', pointer)
-    const author = word['author']
+    const author = word.author
 
     if (pointer === '默认') { return ' [词库核心] 此词库为公共词库，无法修改' }
-    if (!word['author']) { return ' [词库核心] 此词库为空词库' }
+    if (!word.author) { return ' [词库核心] 此词库为空词库' }
     if (author[0] !== mid) { return '[词库核心] 此词库主作者并非是您' }
 
-    word['author'].push(tid)
+    word.author.push(tid)
     update('wordList', pointer, word)
     this.wordObj = this.getCacheWord()
     return ' [词库核心] 当期词库开发者新增一位'
@@ -318,18 +312,18 @@ wordObj: wordCache
    * @param mid 我的id
    * @returns 结果
    */
-  rmWriter (tid:string, mid:string) {
+  rmWriter (tid: string, mid: string) {
     const pointer = getPointer(mid)
     const word = getjson('wordList', pointer)
-    const author = word['author']
+    const author = word.author
 
     if (pointer === '默认') { return ' [词库核心] 此词库为公共词库，无法修改' }
-    if (!word['author']) { return ' [词库核心] 此词库为空词库' }
+    if (!word.author) { return ' [词库核心] 此词库为空词库' }
     if (author[0] !== mid) { return '[词库核心] 此词库主作者并非是您' }
 
-    const index = word['author'].indexOf(tid)
+    const index = word.author.indexOf(tid)
     if (index > -1) {
-      word['author'].splice(index, 1)
+      word.author.splice(index, 1)
       this.wordObj = this.getCacheWord()
       return ' [词库核心] 删除词库作者成功'
     } else {
@@ -343,11 +337,11 @@ wordObj: wordCache
    * @param dbName 词库名
    * @returns Array
    */
-  viewWriter (dbName:string) {
+  viewWriter (dbName: string) {
     const word = getjson('wordList', dbName)
-    if (!word['author']) { return 0 }
-    
-    return word['author']
+    if (!word.author) { return 0 }
+
+    return word.author
   } // 谁是编写者(这边不封装，后期为花园手动封装)
 
   /**
@@ -356,14 +350,14 @@ wordObj: wordCache
    * @param itemName 物品名称
    * @returns 结果
    */
-  setPack (mid:string, itemName:string) {
+  setPack (mid: string, itemName: string) {
     const pointer = getPointer(mid)
     const word = getjson('wordList', pointer)
 
-    if (word['backpack'].indexOf(itemName) > -1) {
+    if (word.backpack.indexOf(itemName) > -1) {
       return ' [词库核心] 该物品已存在清单中'
     } else {
-      word['backpack'].push(itemName)
+      word.backpack.push(itemName)
       this.wordObj = this.getCacheWord()
 
       update('wordList', pointer, word)
@@ -377,18 +371,17 @@ wordObj: wordCache
    * @param itemName 物品名称
    * @returns 结果
    */
-  delPack (mid:string, itemName:string) {
+  delPack (mid: string, itemName: string) {
     const pointer = getPointer(mid)
     const word = getjson('wordList', pointer)
-    const index = word['backpack'].indexOf(itemName)
+    const index = word.backpack.indexOf(itemName)
 
     if (index > -1) {
-      word['backpack'].splice(index, 1)
+      word.backpack.splice(index, 1)
       this.wordObj = this.getCacheWord()
 
       return ' [词库核心] 该物品已从清单中移除'
     } else {
-
       update('wordList', pointer, word)
       return ' [词库核心] 该物品不存在清单中'
     }
@@ -399,11 +392,11 @@ wordObj: wordCache
    * @param mid 触发者id
    * @returns 返回结果
    */
-  listPack(mid:string) {
+  listPack (mid: string) {
     const pointer = getPointer(mid)
     const word = getjson('wordList', pointer)
 
-    return ` [词库核心] 该背包设定的物品清单为：\n\n ${word['backpack'].join('\n')}`
+    return ` [词库核心] 该背包设定的物品清单为：\n\n ${word.backpack.join('\n')}`
   }
 
   /**
@@ -413,19 +406,19 @@ wordObj: wordCache
    * @param id 编辑者id
    * @returns 结果
    */
-  whenOn (q:string, a:string, id:string) {
+  whenOn (q: string, a: string, id: string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
-    
-    if(!word['initiative']) { word['initiative'] = {} }
-    if (!word['initiative'][q]) { word['initiative'][q] = [] }
 
-    word['initiative'][q].push(a)
+    if (!word.initiative) { word.initiative = {} }
+    if (!word.initiative[q]) { word.initiative[q] = [] }
+
+    word.initiative[q].push(a)
 
     update('wordList', pointer, word)
     this.wordObj = this.getCacheWord()
 
-    return ` [词库核心] 更新成功，当前序号为【${word['initiative'][q].length}】`
+    return ` [词库核心] 更新成功，当前序号为【${word.initiative[q].length}】`
   }
 
   /**
@@ -435,18 +428,16 @@ wordObj: wordCache
    * @param id 编辑者id
    * @returns 结果
    */
-  whenOff (q:string, index:string, id:string) {
+  whenOff (q: string, index: string, id: string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
 
-    if (index == 'all') {
-      delete word['initiative'][q]
-
+    if (index === 'all') {
+      delete word.initiative[q]
     } else if (/\d+/.test(index)) {
       const num = Number(index)
-      if (num > word['initiative'][q].length) { return ' [词库核心] 输入的可能不是一个合理的序号哦 '}
-      word['initiative'][q].splice(num - 1, 1)
-
+      if (num > word.initiative[q].length) { return ' [词库核心] 输入的可能不是一个合理的序号哦 ' }
+      word.initiative[q].splice(num - 1, 1)
     } else {
       return ' [词库核心] 输入的可能不是一个合理的序号哦 '
     }
@@ -454,8 +445,7 @@ wordObj: wordCache
     update('wordList', pointer, word)
     this.wordObj = this.getCacheWord()
 
-    return ` [词库核心] 更新成功，当前序号为【${word['initiative'][q].length}】`
-
+    return ` [词库核心] 更新成功，当前序号为【${word.initiative[q].length}】`
   }
 
   /**
@@ -464,12 +454,12 @@ wordObj: wordCache
    * @param id 编辑者id
    * @returns 结果
    */
-  changCache (newCacheName:string ,id:string) {
+  changCache (newCacheName: string, id: string) {
     const pointer = getPointer(id)
     const word = getjson('wordList', pointer)
 
     if (word.author[0] !== id) { return }
-    
+
     word.cache = newCacheName
 
     update('wordList', pointer, word)
@@ -485,29 +475,28 @@ wordObj: wordCache
   download () {} // 下载
 
   // 查询位置
-  
   */
 }
 
-  /*
-    wordObj = {
-      passive: { 触发词: [所拥有的词库] }
-      keys : [所有的触发词],
-      wordList : [所有的库名称],
-      recycleBinList: [回收站列表],
-      initiative: { 主动触发词:[所拥有的词库] }
-    }
-  */
+/*
+  wordObj = {
+    passive: { 触发词: [所拥有的词库] }
+    keys : [所有的触发词],
+    wordList : [所有的库名称],
+    recycleBinList: [回收站列表],
+    initiative: { 主动触发词:[所拥有的词库] }
+  }
+*/
 
-  /*
-    {
-      main:{ // 基础存储 },
-      author: [ // 编写者 ],
-      backpack: [ // 标记物品? ],
-      cache: '存储库名',
-      initiative: { // 主动词库 },
-      function: { // js代码 }
-    }
-  */
+/*
+  {
+    main:{ // 基础存储 },
+    author: [ // 编写者 ],
+    backpack: [ // 标记物品? ],
+    cache: '存储库名',
+    initiative: { // 主动词库 },
+    function: { // js代码 }
+  }
+*/
 
-  // Driver文件夹下有配置主动触发函数的文件 467
+// Driver文件夹下有配置主动触发函数的文件 467

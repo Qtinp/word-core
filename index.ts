@@ -19,8 +19,7 @@ export const driver = new Driver(cacheObj, dir)
  */
 export const initiative = (q: string, playData: { [key: string]: string }) => { return driver.initiativeStart(q, playData) }
 
-
 // 加载额外主动库
 fs.readdirSync(path.join(__dirname, './Function/initiative/')).forEach((value) => {
-    require(path.join(__dirname, './Function/initiative/', value))
+  require(path.join(__dirname, './Function/initiative/', value))
 })

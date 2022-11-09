@@ -1,5 +1,5 @@
 import * as api from '../Tools/index'
-let dir:string
+let dir: string
 
 /**
 * 返回一个文件的json对象
@@ -17,14 +17,12 @@ const getjson = (list: string, name: string) => { return api.command.getjson(dir
 */
 const update = (list: string, name: string, file: any) => { return api.command.update(dir, list, name, file) }
 
-
 export default class {
-
   /**
    * 构建权限组(传入位置)
    * @param inDir 数据存储位置
    */
-  constructor(inDir: string) {
+  constructor (inDir: string) {
     dir = inDir
   }
 
@@ -34,7 +32,7 @@ export default class {
    * @param id 需修改者id
    * @returns 结果
    */
-  add(persName: string, id: string) {
+  add (persName: string, id: string) {
     const persObj = getjson('wordConfig', 'permissions')
 
     if (!persObj[id]) { persObj[id] = [] }
@@ -51,7 +49,7 @@ export default class {
    * @param id 需修改者id
    * @returns 返回结果
    */
-  del(persName: string, id: string) {
+  del (persName: string, id: string) {
     const persObj = getjson('wordConfig', 'permissions')
     const index = persObj[id].indexOf(persName)
 

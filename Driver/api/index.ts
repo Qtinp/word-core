@@ -32,13 +32,10 @@ const pers2 = (inText: string[]): any => {
     const a = T.splice(0, 1)[0]
     if (a[0] === leftBoundarySymbol && isMark(T)) {
       outArr.push(pers2(T))
-
     } else if (a[0] === rightBoundarySymbol && !isMark(T)) {
       return outArr
-
     } else {
       outArr.push(a[0])
-
     }
   }
 
@@ -125,13 +122,11 @@ const getResult = (arrIn: string) => {
   return result
 }
 
-
 // -----------------------------------------------------------------------------------
 //
 // 上方是输出合理结构的，下方是对应到函数包的
 //
 // -----------------------------------------------------------------------------------
-
 
 // 解析出数组
 export const interpreter = (inData: string, playData: { [key: string]: string }): any => {
@@ -151,7 +146,6 @@ export const interpreter = (inData: string, playData: { [key: string]: string })
   } catch (err) {
     return `[Word-Driver] ${err}`
   }
-
 }
 
 // 将数组进行递归处理
@@ -161,7 +155,6 @@ const ArrayInterpreter = (needInterpreterArr: any[], playData: { [key: string]: 
   for (let i = 0; i < inArr.length; i++) {
     if (Array.isArray(inArr[i])) {
       inArr[i] = ArrayInterpreter(inArr[i], playData)
-
     }
   }
 
@@ -171,7 +164,6 @@ const ArrayInterpreter = (needInterpreterArr: any[], playData: { [key: string]: 
     let o = funcPack[inArr[0]](inArr, playData)
     if (!o) { o = '' }
     return o
-
   } else {
     inArr = inArr.join('')
   }

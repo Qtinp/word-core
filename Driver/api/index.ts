@@ -143,8 +143,8 @@ export const interpreter = (inData: string, playData: { [key: string]: string })
       }
     }
     return outArr
-  } catch (err) {
-    return `[Word-Driver] ${err}`
+  } catch (err: any) {
+    return `[Word-Driver] ${err.message}`
   }
 }
 
@@ -169,4 +169,8 @@ const ArrayInterpreter = (needInterpreterArr: any[], playData: { [key: string]: 
   }
 
   return inArr
+}
+
+export const next = () => {
+  return new Error('[Word-Driver] next')
 }

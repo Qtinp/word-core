@@ -23,3 +23,5 @@ export const initiative = (q: string, playData: { [key: string]: string }) => { 
 fs.readdirSync(path.join(__dirname, './Function/initiative/')).forEach((value) => {
   require(path.join(__dirname, './Function/initiative/', value))
 })
+
+console.log(driver.mainStart('q', {}))

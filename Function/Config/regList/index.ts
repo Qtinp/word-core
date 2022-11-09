@@ -4,7 +4,7 @@ import { regList } from './iirose'
 export const messageReg = () => {
   const outRegList: { list: [RegExp, string, string][], item: RegExp } = {
     list: [],
-    item: /?/
+    item: /test/
   }
 
   let item = ''

@@ -19,7 +19,7 @@ const update = (list: string, name: string, file: any) => { return api.command.u
 
 export default class {
   /**
-   * 构建权限组(传入位置)
+   * 设定权限组文件位置
    * @param inDir 数据存储位置
    */
   constructor (inDir: string) {
@@ -51,14 +51,57 @@ export default class {
    */
   del (persName: string, id: string) {
     const persObj = getjson('wordConfig', 'permissions')
+    if (!persObj[id]) { return ' [词库核心] 你不存在此权限' }
+    
     const index = persObj[id].indexOf(persName)
-
-    if (!persObj[id] || index === -1) { return ' [词库核心] 你不存在此权限' }
 
     persObj[id].splice(index, 1)
 
     update('wordConfig', 'permissions', persObj)
 
     return ' [词库核心] 权限修改成功 '
+  }
+
+  /**
+   * 是否有某个权限
+   * @param persName 权限名
+   * @param id 查询id
+   * @returns boolean
+   */
+  have (persName:string, id:string) {
+    const persObj = getjson('wordConfig', 'permissions')
+    if (!persObj[id]) { return false }
+
+    const index = persObj[id].indexOf(persName)
+    if (index > -1) { return true }
+  }
+
+  /**
+   * 查看一个人的全部权限
+   * @param persName 权限名
+   * @param id 查询id
+   * @returns 权限数组
+   */
+  all (persName:string, id:string) {
+    const persObj = getjson('wordConfig', 'permissions')
+    if (!persObj[id]) { persObj[id] = [] }
+
+    return persObj[id]
+  }
+
+  /**
+   * 查询拥有某权限的id列表
+   * @param persName 权限名
+   * @returns id列表
+   */
+  list (persName:string) {
+    const persObj = getjson('wordConfig', 'permissions')
+    let outArr = []
+
+    for (let a in persObj) {
+      if (persObj[a].indexOf() > -1) { outArr.push(a) }
+    }
+
+    return outArr
   }
 }

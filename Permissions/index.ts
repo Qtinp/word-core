@@ -22,7 +22,7 @@ export default class {
    * 设定权限组文件位置
    * @param inDir 数据存储位置
    */
-  constructor (inDir: string) {
+  constructor(inDir: string) {
     dir = inDir
   }
 
@@ -32,7 +32,7 @@ export default class {
    * @param id 需修改者id
    * @returns 结果
    */
-  add (persName: string, id: string) {
+  add(persName: string, id: string) {
     const persObj = getjson('wordConfig', 'permissions')
 
     if (!persObj[id]) { persObj[id] = [] }
@@ -49,10 +49,10 @@ export default class {
    * @param id 需修改者id
    * @returns 返回结果
    */
-  del (persName: string, id: string) {
+  del(persName: string, id: string) {
     const persObj = getjson('wordConfig', 'permissions')
     if (!persObj[id]) { return ' [词库核心] 你不存在此权限' }
-    
+
     const index = persObj[id].indexOf(persName)
 
     persObj[id].splice(index, 1)
@@ -68,12 +68,11 @@ export default class {
    * @param id 查询id
    * @returns boolean
    */
-  have (persName:string, id:string) {
+  have(persName: string, id: string) {
     const persObj = getjson('wordConfig', 'permissions')
     if (!persObj[id]) { return false }
 
-    const index = persObj[id].indexOf(persName)
-    if (index > -1) { return true }
+    return isHava(persObj[id], persName)
   }
 
   /**
@@ -82,7 +81,7 @@ export default class {
    * @param id 查询id
    * @returns 权限数组
    */
-  all (persName:string, id:string) {
+  all(persName: string, id: string) {
     const persObj = getjson('wordConfig', 'permissions')
     if (!persObj[id]) { persObj[id] = [] }
 
@@ -94,7 +93,7 @@ export default class {
    * @param persName 权限名
    * @returns id列表
    */
-  list (persName:string) {
+  list(persName: string) {
     const persObj = getjson('wordConfig', 'permissions')
     let outArr = []
 
@@ -104,4 +103,26 @@ export default class {
 
     return outArr
   }
+}
+
+/**
+ * 是否含有某权限
+ * @param i 我的权限列表(数组)
+ * @param permissionsName 需查权限
+ * @returns boolean
+ */
+ const isHava = (i: string[], permissionsName: string) => {
+  const findNode = permissionsName.split('.')
+
+  for (let node of i) {
+    if (node === permissionsName) { return true }
+    const nodeList = node.split('.')
+
+    for (let index = 0; index < nodeList.length; index++) {
+      if (nodeList[index] === '*') { return true }
+      if (nodeList[index] !== findNode[index]) { break }
+    }
+  }
+
+  return false
 }

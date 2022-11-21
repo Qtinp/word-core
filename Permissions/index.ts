@@ -98,7 +98,7 @@ export default class {
     let outArr = []
 
     for (let a in persObj) {
-      if (persObj[a].indexOf() > -1) { outArr.push(a) }
+      if (isHava(persObj[a], persName)) { outArr.push(a) }
     }
 
     return outArr
